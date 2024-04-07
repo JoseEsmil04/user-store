@@ -1,0 +1,22 @@
+### Login User
+POST http://localhost:4321/api/auth/login/
+Content-Type: application/json
+
+{
+  "email": "jee04@email.com",
+  "password": "123456789"
+}
+
+### Register User
+POST http://localhost:4321/api/auth/register/
+Content-Type: application/json
+
+{
+  "name": "Jose E.",
+  "email": "jee04@email.com",
+  "password": "123456789"
+}
+
+
+### Get Categories
+http://localhost:4321/api/categories/?page=1&limit=5
