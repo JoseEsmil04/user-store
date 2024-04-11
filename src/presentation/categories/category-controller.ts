@@ -1,6 +1,7 @@
 import { CreateCategoryDto, CustomError, PaginationDto } from "../../domain"
 import { Request, Response } from "express"
 import { CategoryService } from "../services/category-service";
+import { UpdateCategoryDto } from "../../domain/dtos/category/update-category-dto";
 
 export class CategoryController {
 
@@ -38,10 +39,21 @@ export class CategoryController {
   }
 
   public updateCategory = async(req: Request, res: Response) => {
-    res.json({msg: 'Update Category!'});
+    const name = req.params.name;
+    const [error, updateCategoryDto] = UpdateCategoryDto.create({name, ...req.body});
+
+    if(error) return res.status(400).json({ error })
+
+    this.categoryService.updateCategory(name, updateCategoryDto!)
+      .then(category => res.status(200).json(category))
+      .catch(err => this.handleError(err, res))
   }
 
   public deleteCategory = async(req: Request, res: Response) => {
-    res.json({msg: 'Delete Category!'});
+    const name = req.params.name;
+    
+    this.categoryService.deleteCategory(name)
+      .then(category => res.status(200).json(category))
+      .catch(err => this.handleError(err, res))
   }
 }
